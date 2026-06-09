@@ -10,26 +10,21 @@
   <a href="index.html">Home</a>
   <a href="hire.html">Hire Testers</a>
   <a href="apply.html">Apply</a>
-  <a href="https://discord.com" target="_blank">Contact</a>
 </nav>
 
 <header>
-  <h1>Tester Application</h1>
-  <p>Only serious testers. Duplicate applications will be ignored.</p>
+  <h1>Apply as Tester</h1>
 </header>
 
-<div class="container">
+<div class="section">
 
 <form onsubmit="submitApp(event)">
-
   <input placeholder="Roblox Username" required><br>
-  <input placeholder="Age (13+)" required><br>
-  <input placeholder="Experience with QA/testing?" required><br>
-  <input placeholder="Games tested before" required><br>
-  <textarea placeholder="Why do you want to join TesterForAll?" required></textarea><br>
+  <input placeholder="Experience" required><br>
+  <input placeholder="Games tested" required><br>
+  <textarea placeholder="Why join?" required></textarea><br>
 
-  <button class="btn" type="submit">Submit</button>
-
+  <button class="btn">Submit</button>
 </form>
 
 </div>
@@ -37,7 +32,7 @@
 <script>
 function submitApp(e){
   e.preventDefault();
-  alert("Application sent! Duplicate applications will be ignored.");
+  alert("Application submitted. Duplicate apps ignored.");
 }
 </script>
 
