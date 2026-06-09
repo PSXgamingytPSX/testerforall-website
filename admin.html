@@ -1,31 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+  <title>Admin</title>
 </head>
 
 <body>
 
 <h1>Admin Dashboard</h1>
 
-<button onclick="loadOrders()">Load Orders</button>
-<button onclick="loadApps()">Load Applications</button>
+<button onclick="load()">Load Orders</button>
 
-<h2>Orders</h2>
-<div id="orders"></div>
-
-<h2>Applications</h2>
-<div id="apps"></div>
+<div id="out"></div>
 
 <script type="module">
 import { db } from "./firebase.js";
-import {
-  collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* ---------------- ORDERS ---------------- */
-window.loadOrders = async function () {
+window.load = async function () {
   const snap = await getDocs(collection(db, "orders"));
 
   let html = "";
@@ -34,41 +25,17 @@ window.loadOrders = async function () {
     const d = doc.data();
 
     html += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px;">
-        <b>Plan:</b> ${d.plan} <br>
-        <b>Price:</b> ${d.price} RBX <br>
-        <b>User:</b> ${d.email || "Unknown"} <br>
-        <b>Status:</b> ${d.status} <br>
+      <div style="border:1px solid #ccc;margin:10px;padding:10px">
+        <b>Plan:</b> ${d.plan}<br>
+        <b>Price:</b> ${d.price}<br>
+        <b>User:</b> ${d.email}<br>
+        <b>Status:</b> ${d.status}<br>
         <b>Time:</b> ${new Date(d.time).toLocaleString()}
       </div>
     `;
   });
 
-  document.getElementById("orders").innerHTML = html || "No orders";
-};
-
-/* ---------------- APPLICATIONS ---------------- */
-window.loadApps = async function () {
-  const snap = await getDocs(collection(db, "applications"));
-
-  let html = "";
-
-  snap.forEach(doc => {
-    const d = doc.data();
-
-    html += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px;">
-        <b>Username:</b> ${d.username} <br>
-        <b>Age:</b> ${d.age} <br>
-        <b>Experience:</b> ${d.experience} <br>
-        <b>Games:</b> ${d.games} <br>
-        <b>Reason:</b> ${d.reason} <br>
-        <b>Time:</b> ${new Date(d.time).toLocaleString()}
-      </div>
-    `;
-  });
-
-  document.getElementById("apps").innerHTML = html || "No applications";
+  out.innerHTML = html || "No orders";
 };
 </script>
 
