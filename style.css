@@ -3,38 +3,38 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: #000;
-  color: white;
+  background: #f7f8fc;
+  color: #111;
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND GLOW BLOBS ===== */
+/* SOFT FLOATING BACKGROUND BLOBS */
 body::before,
 body::after {
   content: "";
   position: fixed;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255,0,0,0.25), transparent 60%);
-  filter: blur(80px);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(100,150,255,0.25), transparent 60%);
+  filter: blur(90px);
   z-index: -1;
-  animation: floatGlow 8s infinite alternate ease-in-out;
-}
-
-body::before {
-  top: -100px;
-  left: -100px;
+  animation: float 10s infinite alternate ease-in-out;
 }
 
 body::after {
-  bottom: -100px;
-  right: -100px;
-  background: radial-gradient(circle, rgba(255,50,50,0.18), transparent 60%);
+  bottom: -120px;
+  right: -120px;
+  background: radial-gradient(circle, rgba(255,120,200,0.2), transparent 60%);
 }
 
-@keyframes floatGlow {
+body::before {
+  top: -120px;
+  left: -120px;
+}
+
+@keyframes float {
   from { transform: translateY(0px) scale(1); }
-  to { transform: translateY(40px) scale(1.2); }
+  to { transform: translateY(50px) scale(1.2); }
 }
 
 /* NAV */
@@ -43,46 +43,40 @@ nav {
   justify-content: center;
   gap: 25px;
   padding: 18px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
   position: sticky;
   top: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,0,0,0.2);
 }
 
 nav a {
-  color: white;
   text-decoration: none;
+  color: #333;
   font-weight: 500;
 }
 
 nav a:hover {
-  color: #ff2b2b;
+  color: #5b7cff;
 }
 
-/* HEADER */
+/* HERO */
 header {
   text-align: center;
   padding: 110px 20px;
 }
 
 header h1 {
-  font-size: 60px;
+  font-size: 58px;
   font-weight: 800;
-  background: linear-gradient(90deg, #ff0000, #ff5c5c, #ff0000);
+  background: linear-gradient(90deg, #5b7cff, #ff6bd6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glow 3s infinite alternate;
 }
 
 header p {
-  opacity: 0.8;
   font-size: 18px;
-}
-
-@keyframes glow {
-  from { filter: drop-shadow(0 0 10px #ff000044); }
-  to { filter: drop-shadow(0 0 25px #ff000088); }
+  opacity: 0.7;
 }
 
 /* BUTTONS */
@@ -97,9 +91,9 @@ button {
 }
 
 .btn {
-  background: linear-gradient(90deg, #ff0000, #8b0000);
+  background: linear-gradient(90deg, #5b7cff, #7c4dff);
   color: white;
-  box-shadow: 0 0 20px rgba(255,0,0,0.25);
+  box-shadow: 0 10px 25px rgba(91,124,255,0.2);
 }
 
 button:hover {
@@ -129,15 +123,16 @@ button:hover {
   margin: 15px;
   padding: 25px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,0,0,0.25);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(0,0,0,0.05);
   backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   transition: 0.3s;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  border: 1px solid rgba(255,0,0,0.6);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 /* INPUTS */
@@ -145,8 +140,6 @@ input, textarea {
   padding: 12px;
   margin: 6px;
   border-radius: 10px;
-  border: none;
+  border: 1px solid rgba(0,0,0,0.1);
   width: 260px;
-  background: rgba(255,255,255,0.05);
-  color: white;
 }
