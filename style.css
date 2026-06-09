@@ -3,38 +3,25 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: #f7f8fc;
-  color: #111;
+  background: #f5f7ff;
   overflow-x: hidden;
+  color: #111;
 }
 
-/* SOFT FLOATING BACKGROUND BLOBS */
-body::before,
-body::after {
+/* ===== FADED ROBLOX CITY BACKGROUND ===== */
+body::before {
   content: "";
   position: fixed;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(100,150,255,0.25), transparent 60%);
-  filter: blur(90px);
-  z-index: -1;
-  animation: float 10s infinite alternate ease-in-out;
-}
-
-body::after {
-  bottom: -120px;
-  right: -120px;
-  background: radial-gradient(circle, rgba(255,120,200,0.2), transparent 60%);
-}
-
-body::before {
-  top: -120px;
-  left: -120px;
-}
-
-@keyframes float {
-  from { transform: translateY(0px) scale(1); }
-  to { transform: translateY(50px) scale(1.2); }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(to right, rgba(245,247,255,1), rgba(245,247,255,0.2)),
+    url("https://images.unsplash.com/photo-1520975958225-6f2f4b3b3a0d?auto=format&fit=crop&w=1600&q=60");
+  background-size: cover;
+  opacity: 0.12;
+  z-index: -2;
 }
 
 /* NAV */
@@ -45,37 +32,36 @@ nav {
   padding: 18px;
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.05);
   position: sticky;
   top: 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 nav a {
   text-decoration: none;
-  color: #333;
+  color: #222;
   font-weight: 500;
 }
 
 nav a:hover {
-  color: #5b7cff;
+  color: #5a67ff;
 }
 
 /* HERO */
 header {
   text-align: center;
-  padding: 110px 20px;
+  padding: 120px 20px;
 }
 
 header h1 {
-  font-size: 58px;
+  font-size: 64px;
   font-weight: 800;
-  background: linear-gradient(90deg, #5b7cff, #ff6bd6);
+  background: linear-gradient(90deg, #4f6cff, #ff4fd8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 header p {
-  font-size: 18px;
   opacity: 0.7;
 }
 
@@ -83,63 +69,76 @@ header p {
 button {
   padding: 12px 18px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  margin: 6px;
   font-weight: 600;
+  margin: 6px;
   transition: 0.3s;
 }
 
 .btn {
-  background: linear-gradient(90deg, #5b7cff, #7c4dff);
+  background: linear-gradient(90deg, #4f6cff, #7a4dff);
   color: white;
-  box-shadow: 0 10px 25px rgba(91,124,255,0.2);
+  box-shadow: 0 10px 25px rgba(79,108,255,0.2);
 }
 
 button:hover {
   transform: translateY(-3px);
 }
 
-/* SECTIONS */
-.container {
+/* SECTION ANIMATION (FRAMER STYLE) */
+.section {
+  padding: 80px 20px;
   text-align: center;
-  padding: 50px;
   opacity: 0;
-  transform: translateY(40px);
-  animation: fadeIn 1s forwards;
+  transform: translateY(60px);
+  animation: fadeUp 1s forwards;
 }
 
-@keyframes fadeIn {
+@keyframes fadeUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+/* GRID */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
 /* CARDS */
 .card {
-  display: inline-block;
-  width: 280px;
-  margin: 15px;
-  padding: 25px;
+  width: 260px;
+  padding: 20px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(0,0,0,0.05);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transform: translateY(-8px);
 }
 
 /* INPUTS */
 input, textarea {
+  width: 260px;
   padding: 12px;
   margin: 6px;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.1);
-  width: 260px;
+  border: 1px solid #ddd;
+}
+
+/* AVAILABILITY BADGE */
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #d4ffe3;
+  color: #0a7a2f;
+  font-size: 12px;
 }
