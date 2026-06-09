@@ -7,86 +7,115 @@
 
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="hire.html">Hire Testers</a>
-  <a href="apply.html">Apply</a>
-  <a href="admin.html">Admin</a>
-</nav>
+<h1>Hire Testers</h1>
+<p>Choose a testing package</p>
 
-<header>
-  <h1>Pricing</h1>
-  <p>Choose a testing package</p>
-</header>
-
-<div class="section">
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>1 Week of Testing</h3>
-      <p>Full QA testing</p>
-      <b>1,000 RBX</b>
-      <br><br>
-      <button onclick="book('1 Week of Testing', 1000)" class="btn">Buy</button>
-    </div>
-
-    <div class="card">
-      <h3>2 Weeks of Testing</h3>
-      <p>Extended bug testing</p>
-      <b>1,500 RBX</b>
-      <br><br>
-      <button onclick="book('2 Weeks of Testing', 1500)" class="btn">Buy</button>
-    </div>
-
-    <div class="card">
-      <h3>4 Weeks of Testing</h3>
-      <p>Deep QA coverage</p>
-      <b>2,500 RBX</b>
-      <br><br>
-      <button onclick="book('4 Weeks of Testing', 2500)" class="btn">Buy</button>
-    </div>
-
-    <div class="card">
-      <h3>1 Month of Testing</h3>
-      <p>Full continuous testing</p>
-      <b>3,500 RBX</b>
-      <br><br>
-      <button onclick="book('1 Month of Testing', 3500)" class="btn">Buy</button>
-    </div>
-
-    <div class="card">
-      <h3>Custom Plan</h3>
-      <p>100 RBX per day</p>
-
-      <input id="days" placeholder="Enter days">
-
-      <button onclick="calc()" class="btn">Calculate</button>
-      <p id="result"></p>
-
-      <br>
-      <button onclick="bookCustom()" class="btn">Buy Custom</button>
-    </div>
-
-  </div>
-
+<div class="card">
+  <h3>1 Week of Testing</h3>
+  <p>1000 RBX</p>
+  <button onclick="book('1 Week of Testing', 1000)">Buy</button>
 </div>
 
+<div class="card">
+  <h3>2 Weeks of Testing</h3>
+  <p>1500 RBX</p>
+  <button onclick="book('2 Weeks of Testing', 1500)">Buy</button>
+</div>
+
+<div class="card">
+  <h3>4 Weeks of Testing</h3>
+  <p>2500 RBX</p>
+  <button onclick="book('4 Weeks of Testing', 2500)">Buy</button>
+</div>
+
+<div class="card">
+  <h3>1 Month of Testing</h3>
+  <p>3500 RBX</p>
+  <button onclick="book('1 Month of Testing', 3500)">Buy</button>
+</div>
+
+<hr>
+
+<h2>Custom Plan</h2>
+<p>100 RBX per day</p>
+
+<input id="days" placeholder="Enter days">
+<button onclick="calc()">Calculate</button>
+<p id="result"></p>
+
+<button onclick="bookCustom()">Buy Custom</button>
+
+<!-- FIREBASE -->
+<script type="module">
+import { auth, db } from "./firebase.js";
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* ---------------- BOOKING ---------------- */
 window.book = async function(plan, price) {
+  try {
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("You must be logged in first!");
+      window.location.href = "login.html";
+      return;
+    }
+
+    await addDoc(collection(db, "orders"), {
+      plan: plan,
+      price: price,
+      email: user.email,
+      status: "pending",
+      time: Date.now()
+    });
+
+    alert("Booking successful!");
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+/* ---------------- CUSTOM CALC ---------------- */
+window.calc = function() {
+  let days = document.getElementById("days").value;
+  let total = days * 100;
+
+  document.getElementById("result").innerText =
+    "Total: " + total + " RBX";
+};
+
+/* ---------------- CUSTOM BOOKING ---------------- */
+window.bookCustom = async function() {
+  const days = document.getElementById("days").value;
+
+  if (!days) {
+    alert("Enter number of days!");
+    return;
+  }
+
+  const price = days * 100;
   const user = auth.currentUser;
 
   if (!user) {
-    alert("You must be logged in!");
+    alert("You must be logged in first!");
+    window.location.href = "login.html";
     return;
   }
 
   await addDoc(collection(db, "orders"), {
-    plan: plan,
+    plan: `Custom (${days} days)`,
     price: price,
-    status: "pending",
     email: user.email,
+    status: "pending",
     time: Date.now()
   });
 
-  alert("Booking successful!");
+  alert("Custom order sent!");
 };
+</script>
+
+</body>
+</html>
