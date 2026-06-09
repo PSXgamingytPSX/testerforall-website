@@ -2,118 +2,81 @@
 <html>
 <head>
   <title>Hire Testers</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="hire.html">Hire</a>
+  <a href="login.html">Login</a>
+</nav>
+
 <h1>Hire Testers</h1>
-<p>Choose a testing package</p>
 
-<div class="card">
-  <h3>1 Week of Testing</h3>
-  <p>1000 RBX</p>
-  <button onclick="book('1 Week of Testing', 1000)">Buy</button>
+<div>
+  <button onclick="book('1 Week',1000)">1 Week - 1000 RBX</button>
+  <button onclick="book('2 Weeks',1500)">2 Weeks - 1500 RBX</button>
+  <button onclick="book('4 Weeks',2500)">4 Weeks - 2500 RBX</button>
+  <button onclick="book('1 Month',3500)">1 Month - 3500 RBX</button>
 </div>
 
-<div class="card">
-  <h3>2 Weeks of Testing</h3>
-  <p>1500 RBX</p>
-  <button onclick="book('2 Weeks of Testing', 1500)">Buy</button>
-</div>
+<br>
 
-<div class="card">
-  <h3>4 Weeks of Testing</h3>
-  <p>2500 RBX</p>
-  <button onclick="book('4 Weeks of Testing', 2500)">Buy</button>
-</div>
-
-<div class="card">
-  <h3>1 Month of Testing</h3>
-  <p>3500 RBX</p>
-  <button onclick="book('1 Month of Testing', 3500)">Buy</button>
-</div>
-
-<hr>
-
-<h2>Custom Plan</h2>
-<p>100 RBX per day</p>
-
-<input id="days" placeholder="Enter days">
+<h3>Custom</h3>
+<input id="days" placeholder="Days">
 <button onclick="calc()">Calculate</button>
 <p id="result"></p>
-
 <button onclick="bookCustom()">Buy Custom</button>
 
-<!-- FIREBASE -->
 <script type="module">
 import { auth, db } from "./firebase.js";
-import {
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* ---------------- BOOKING ---------------- */
 window.book = async function(plan, price) {
-  try {
-    const user = auth.currentUser;
-
-    if (!user) {
-      alert("You must be logged in first!");
-      window.location.href = "login.html";
-      return;
-    }
-
-    await addDoc(collection(db, "orders"), {
-      plan: plan,
-      price: price,
-      email: user.email,
-      status: "pending",
-      time: Date.now()
-    });
-
-    alert("Booking successful!");
-  } catch (err) {
-    alert(err.message);
-  }
-};
-
-/* ---------------- CUSTOM CALC ---------------- */
-window.calc = function() {
-  let days = document.getElementById("days").value;
-  let total = days * 100;
-
-  document.getElementById("result").innerText =
-    "Total: " + total + " RBX";
-};
-
-/* ---------------- CUSTOM BOOKING ---------------- */
-window.bookCustom = async function() {
-  const days = document.getElementById("days").value;
-
-  if (!days) {
-    alert("Enter number of days!");
-    return;
-  }
-
-  const price = days * 100;
   const user = auth.currentUser;
 
   if (!user) {
-    alert("You must be logged in first!");
-    window.location.href = "login.html";
+    alert("Please login first");
+    location.href = "login.html";
     return;
   }
 
   await addDoc(collection(db, "orders"), {
-    plan: `Custom (${days} days)`,
-    price: price,
+    plan,
+    price,
     email: user.email,
     status: "pending",
     time: Date.now()
   });
 
-  alert("Custom order sent!");
+  alert("Booked!");
+};
+
+window.calc = function() {
+  result.innerText = "Total: " + (days.value * 100) + " RBX";
+};
+
+window.bookCustom = async function() {
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("Please login first");
+    location.href = "login.html";
+    return;
+  }
+
+  const price = days.value * 100;
+
+  await addDoc(collection(db, "orders"), {
+    plan: `Custom (${days.value} days)`,
+    price,
+    email: user.email,
+    status: "pending",
+    time: Date.now()
+  });
+
+  alert("Custom booked!");
 };
 </script>
 
