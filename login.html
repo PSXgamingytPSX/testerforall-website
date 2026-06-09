@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+
+<h2>Login / Register</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="register()">Register</button>
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script type="module">
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "./firebase.js";
+
+window.register = async function () {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+
+  try {
+    await createUserWithEmailAndPassword(auth, email, pass);
+    document.getElementById("msg").innerText = "Account created!";
+  } catch (e) {
+    document.getElementById("msg").innerText = e.message;
+  }
+};
+
+window.login = async function () {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    document.getElementById("msg").innerText = "Logged in!";
+    setTimeout(() => window.location.href = "index.html", 1000);
+  } catch (e) {
+    document.getElementById("msg").innerText = e.message;
+  }
+};
+</script>
+
+</body>
+</html>
