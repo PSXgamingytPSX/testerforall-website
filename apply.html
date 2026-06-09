@@ -6,73 +6,38 @@
 </head>
 <body>
 
-<header>
-  <h1>Become a Tester</h1>
-  <p>Apply to join TesterForAll</p>
-</header>
-
-<div class="container">
-  <form>
-    <p>Roblox Username</p>
-    <input type="text">
-
-    <p>Experience</p>
-    <input type="text">
-
-    <p>Why do you want to join?</p>
-    <input type="text">
-
-    <br><br>
-    <button class="btn">Submit</button>
-  </form>
-</div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Apply</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <nav>
   <a href="index.html">Home</a>
   <a href="hire.html">Hire Tester</a>
   <a href="apply.html">Apply</a>
-  <a href="login.html">Login</a>
+  <a href="https://discord.com" target="_blank">Contact</a>
 </nav>
 
 <header>
   <h1>Become a Tester</h1>
+  <p>Applications are reviewed manually — duplicates will be ignored</p>
 </header>
 
 <div class="container">
 
-  <form onsubmit="saveApp(event)">
-    <input id="name" placeholder="Roblox Username"><br><br>
-    <input id="exp" placeholder="Experience"><br><br>
-    <input id="reason" placeholder="Why join?"><br><br>
+  <form onsubmit="submitApp(event)">
 
-    <button class="btn" type="submit">Submit</button>
+    <input placeholder="Roblox Username" required><br>
+    <input placeholder="Age (13+ required)" required><br>
+    <input placeholder="Experience with testing?" required><br>
+    <input placeholder="Games you tested before" required><br>
+    <textarea placeholder="Why do you want to join?" required></textarea><br>
+
+    <button class="btn" type="submit">Submit Application</button>
+
   </form>
 
 </div>
 
 <script>
-function saveApp(e) {
+function submitApp(e){
   e.preventDefault();
-
-  const data = {
-    name: document.getElementById("name").value,
-    exp: document.getElementById("exp").value,
-    reason: document.getElementById("reason").value
-  };
-
-  localStorage.setItem("application", JSON.stringify(data));
-
-  alert("Application sent!");
+  alert("Application sent! Duplicate applications will be ignored.");
 }
 </script>
 
