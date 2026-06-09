@@ -10,44 +10,62 @@
   <a href="index.html">Home</a>
   <a href="hire.html">Hire Testers</a>
   <a href="apply.html">Apply</a>
-  <a href="https://discord.com" target="_blank">Contact</a>
 </nav>
 
 <header>
-  <h1>Testing Packages</h1>
+  <h1>Pricing</h1>
 </header>
 
-<div class="container">
+<div class="section">
 
-  <div class="card">
-    <h2>Starter</h2>
-    <p>Basic bug testing</p>
-    <p><b>Free / Trial</b></p>
-    <button class="btn">Select</button>
-  </div>
+  <div class="grid">
 
-  <div class="card">
-    <h2>Standard</h2>
-    <p>Gameplay + bug report</p>
-    <p><b>100 RBX</b></p>
-    <button class="btn">Select</button>
-  </div>
+    <div class="card">
+      <h3>1 Week</h3>
+      <p>Full testing coverage</p>
+      <b>1,000 RBX</b>
+    </div>
 
-  <div class="card">
-    <h2>Pro</h2>
-    <p>Full QA testing + report</p>
-    <p><b>300 RBX</b></p>
-    <button class="btn">Select</button>
-  </div>
+    <div class="card">
+      <h3>2 Weeks</h3>
+      <p>Extended QA testing</p>
+      <b>1,500 RBX</b>
+    </div>
 
-  <div class="card">
-    <h2>Custom</h2>
-    <p>Build your own package</p>
-    <p><b>Contact Discord</b></p>
-    <button class="btn">Contact</button>
+    <div class="card">
+      <h3>4 Weeks</h3>
+      <p>Deep long-term testing</p>
+      <b>2,500 RBX</b>
+    </div>
+
+    <div class="card">
+      <h3>1 Month</h3>
+      <p>Full continuous QA</p>
+      <b>3,500 RBX</b>
+    </div>
+
+    <div class="card">
+      <h3>Custom</h3>
+      <p>100 RBX per day</p>
+
+      <input id="days" placeholder="Enter days">
+
+      <button class="btn" onclick="calc()">Calculate</button>
+
+      <p id="result"></p>
+    </div>
+
   </div>
 
 </div>
+
+<script>
+function calc(){
+  let days = document.getElementById("days").value;
+  let cost = days * 100;
+  document.getElementById("result").innerText = "Total: " + cost + " RBX";
+}
+</script>
 
 </body>
 </html>
