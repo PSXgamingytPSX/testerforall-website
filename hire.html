@@ -4,16 +4,19 @@
   <title>Hire Testers</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <nav>
   <a href="index.html">Home</a>
   <a href="hire.html">Hire Testers</a>
   <a href="apply.html">Apply</a>
+  <a href="admin.html">Admin</a>
 </nav>
 
 <header>
   <h1>Pricing</h1>
+  <p>Choose a testing package</p>
 </header>
 
 <div class="section">
@@ -21,50 +24,95 @@
   <div class="grid">
 
     <div class="card">
-      <h3>1 Week</h3>
-      <p>Full testing coverage</p>
+      <h3>1 Week of Testing</h3>
+      <p>Full QA testing</p>
       <b>1,000 RBX</b>
+      <br><br>
+      <button onclick="book('1 Week of Testing', 1000)" class="btn">Buy</button>
     </div>
 
     <div class="card">
-      <h3>2 Weeks</h3>
-      <p>Extended QA testing</p>
+      <h3>2 Weeks of Testing</h3>
+      <p>Extended bug testing</p>
       <b>1,500 RBX</b>
+      <br><br>
+      <button onclick="book('2 Weeks of Testing', 1500)" class="btn">Buy</button>
     </div>
 
     <div class="card">
-      <h3>4 Weeks</h3>
-      <p>Deep long-term testing</p>
+      <h3>4 Weeks of Testing</h3>
+      <p>Deep QA coverage</p>
       <b>2,500 RBX</b>
+      <br><br>
+      <button onclick="book('4 Weeks of Testing', 2500)" class="btn">Buy</button>
     </div>
 
     <div class="card">
-      <h3>1 Month</h3>
-      <p>Full continuous QA</p>
+      <h3>1 Month of Testing</h3>
+      <p>Full continuous testing</p>
       <b>3,500 RBX</b>
+      <br><br>
+      <button onclick="book('1 Month of Testing', 3500)" class="btn">Buy</button>
     </div>
 
     <div class="card">
-      <h3>Custom</h3>
+      <h3>Custom Plan</h3>
       <p>100 RBX per day</p>
 
       <input id="days" placeholder="Enter days">
 
-      <button class="btn" onclick="calc()">Calculate</button>
-
+      <button onclick="calc()" class="btn">Calculate</button>
       <p id="result"></p>
+
+      <br>
+      <button onclick="bookCustom()" class="btn">Buy Custom</button>
     </div>
 
   </div>
 
 </div>
 
-<script>
-function calc(){
+<!-- FIREBASE BOOKING SCRIPT -->
+<script type="module">
+import { db } from "./firebase.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+window.book = async function(plan, price) {
+  try {
+    await addDoc(collection(db, "orders"), {
+      plan: plan,
+      price: price,
+      status: "pending",
+      time: Date.now()
+    });
+
+    alert("Booking successful!");
+  } catch (e) {
+    alert("Error: " + e.message);
+  }
+};
+
+window.calc = function() {
   let days = document.getElementById("days").value;
   let cost = days * 100;
   document.getElementById("result").innerText = "Total: " + cost + " RBX";
-}
+};
+
+window.bookCustom = async function() {
+  let days = document.getElementById("days").value;
+  let cost = days * 100;
+
+  if (!days) return alert("Enter number of days first!");
+
+  await addDoc(collection(db, "orders"), {
+    plan: `Custom (${days} days)`,
+    price: cost,
+    status: "pending",
+    time: Date.now()
+  });
+
+  alert("Custom booking sent!");
+};
 </script>
 
 </body>
