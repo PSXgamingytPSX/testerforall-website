@@ -3,12 +3,20 @@
 <head>
   <title>Login</title>
 </head>
+
 <body>
 
-<h2>Login / Register</h2>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="login.html">Login</a>
+</nav>
+
+<h1>Login</h1>
 
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
+
+<br><br>
 
 <button onclick="register()">Register</button>
 <button onclick="login()">Login</button>
@@ -16,34 +24,36 @@
 <p id="msg"></p>
 
 <script type="module">
+import { auth } from "./firebase.js";
 import {
-  auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword
-} from "./firebase.js";
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 window.register = async function () {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
-
   try {
-    await createUserWithEmailAndPassword(auth, email, pass);
-    document.getElementById("msg").innerText = "Account created!";
+    await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    msg.innerText = "Account created!";
   } catch (e) {
-    document.getElementById("msg").innerText = e.message;
+    msg.innerText = e.message;
   }
 };
 
 window.login = async function () {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
-
   try {
-    await signInWithEmailAndPassword(auth, email, pass);
-    document.getElementById("msg").innerText = "Logged in!";
-    setTimeout(() => window.location.href = "index.html", 1000);
+    await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    msg.innerText = "Logged in!";
+    setTimeout(() => location.href = "index.html", 1000);
   } catch (e) {
-    document.getElementById("msg").innerText = e.message;
+    msg.innerText = e.message;
   }
 };
 </script>
